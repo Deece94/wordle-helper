@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dictionary from "./dictionary";
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
 
   const updateKnown = (e) => {
     const input = e.target;
-    const newKnownLetters = knownLetters;
+    const newKnownLetters = [...knownLetters];
     let value = input.value;
     const pos = input.dataset.pos;
 
@@ -27,30 +27,21 @@ function App() {
       const nextInput = document.querySelector(`input[data-pos='${nextPos}']`);
       nextInput.select();
     }
-
-    updateGuesses();
   };
 
   const updateGuessedLetters = (e) => {
     const input = e.target;
     const newGuessedLetters = input.value.split("");
-    console.log(newGuessedLetters);
-
     setGuessedLetters(newGuessedLetters);
-
-    updateGuesses();
   };
 
   const updateIncorrectLetters = (e) => {
     const input = e.target;
     const newIncorrectLetters = input.value.split("");
-    console.log(newIncorrectLetters);
     setIncorrectLetters(newIncorrectLetters);
-
-    updateGuesses();
   };
 
-  const updateGuesses = () => {
+  useEffect(() => {
     const newGuesses = [];
 
     const shuffledDictionary = shuffle(dictionary);
@@ -97,7 +88,7 @@ function App() {
     });
 
     setGuesses(newGuesses);
-  };
+  }, [knownLetters, guessedLetters, incorrectLetters]);
 
   const shuffle = (array) => {
     let currentIndex = array.length,
