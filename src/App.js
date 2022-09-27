@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import dictionary from "./dictionary";
+import "./App.css";
 
 function App() {
   const [knownLetters, setKnownLetters] = useState(["", "", "", "", ""]);
@@ -112,26 +113,38 @@ function App() {
 
   return (
     <div className="flex align-center">
-      <div>
-        <input className="border" data-pos={0} onChange={updateKnown} />
-        <input className="border" data-pos={1} onChange={updateKnown} />
-        <input className="border" data-pos={2} onChange={updateKnown} />
-        <input className="border" data-pos={3} onChange={updateKnown} />
-        <input className="border" data-pos={4} onChange={updateKnown} />
+      <div className="knownLetters">
+        <input className="letter" data-pos={0} onChange={updateKnown} />
+        <input className="letter" data-pos={1} onChange={updateKnown} />
+        <input className="letter" data-pos={2} onChange={updateKnown} />
+        <input className="letter" data-pos={3} onChange={updateKnown} />
+        <input className="letter" data-pos={4} onChange={updateKnown} />
       </div>
 
-      <label>Semi correct Letters</label>
-      <textarea onChange={updateGuessedLetters}></textarea>
+      <div className="guessesSection">
+        <h2 className="title">Semi correct Letters</h2>
+        <textarea
+          className="guesses"
+          onChange={updateGuessedLetters}
+        ></textarea>
+      </div>
 
-      <label>Incorrect Letters</label>
-      <textarea onChange={updateIncorrectLetters}></textarea>
+      <div className="guessesSection">
+        <h2 className="title">Incorrect Letters</h2>
+        <textarea
+          className="guesses"
+          onChange={updateIncorrectLetters}
+        ></textarea>
+      </div>
 
-      <h2>Suggestions</h2>
-      <ul id="guess-list">
-        {guesses.map((guess, index) => {
-          return <li key={index}>{guess}</li>;
-        })}
-      </ul>
+      <div class="suggestionsSection">
+        <h2 className="title">Suggestions</h2>
+        <ul id="guess-list">
+          {guesses.map((guess, index) => {
+            return <li key={index}>{guess}</li>;
+          })}
+        </ul>
+      </div>
     </div>
   );
 }
