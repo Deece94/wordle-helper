@@ -45,7 +45,7 @@ function App() {
   useEffect(() => {
     const newGuesses = [];
 
-    const shuffledDictionary = shuffle(dictionary);
+    const shuffledDictionary = sortArray(dictionary);
 
     shuffledDictionary.every((word) => {
       // Check known letters
