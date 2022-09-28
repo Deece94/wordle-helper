@@ -1,32 +1,72 @@
+body {
+  background-color: #f0f8ff;
+  font-family: 'Cabin', sans-serif;
+  font-family: 'Noto Sans Mono', monospace;
+  color: #222222;
+}
+
+.container {
+  width: calc(540px - 24px * 2);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 12px;
+}
+
+.headerTitle {
+  font-size: 2.6em;
+  text-align: center;
+}
+
 .knownLetters {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .letter {
-    margin: 0 2px;
-    height: 50px;
-    width: 50px;
-    font-size:  2em;
-    text-align: center;
+  margin: 0 2px;
+  height: 50px;
+  width: 50px;
+  font-size: 2em;
+  text-align: center;
 }
 
-.guessesSection, .suggestionsSection {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.guessesSection,
+.suggestionsSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .title {
-    padding-top: 22px;
-    display: block;
-    font-size: 2em;
+  padding-top: 22px;
+  display: block;
+  font-size: 2em;
 }
 
 .guesses {
-    resize: none;
-    font-size: 1.2em;
-    width: 120px;
-    height: 20px;
+  resize: none;
+  font-size: 1.2em;
+  width: 120px;
+  height: 20px;
+}
 
+.guessList {
+  padding-inline-start: 0;
+  margin-block: 0;
+}
+
+.listItem {
+  list-style: none;
+  text-align: left;
+}
+
+@media (max-width: 540px) {
+  .container {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 24px 0;
+  }
 }

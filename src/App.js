@@ -112,40 +112,47 @@ function App() {
   };
 
   return (
-    <div className="flex align-center">
-      <div className="knownLetters">
-        <input className="letter" data-pos={0} onChange={updateKnown} />
-        <input className="letter" data-pos={1} onChange={updateKnown} />
-        <input className="letter" data-pos={2} onChange={updateKnown} />
-        <input className="letter" data-pos={3} onChange={updateKnown} />
-        <input className="letter" data-pos={4} onChange={updateKnown} />
-      </div>
+    <>
+      <h1 className="headerTitle">Wordle Helper</h1>
+      <div className="container">
+        <div className="knownLetters">
+          <input className="letter" data-pos={0} onChange={updateKnown} />
+          <input className="letter" data-pos={1} onChange={updateKnown} />
+          <input className="letter" data-pos={2} onChange={updateKnown} />
+          <input className="letter" data-pos={3} onChange={updateKnown} />
+          <input className="letter" data-pos={4} onChange={updateKnown} />
+        </div>
 
-      <div className="guessesSection">
-        <h2 className="title">Semi correct Letters</h2>
-        <textarea
-          className="guesses"
-          onChange={updateGuessedLetters}
-        ></textarea>
-      </div>
+        <div className="guessesSection">
+          <h2 className="title">Semi correct Letters</h2>
+          <textarea
+            className="guesses"
+            onChange={updateGuessedLetters}
+          ></textarea>
+        </div>
 
-      <div className="guessesSection">
-        <h2 className="title">Incorrect Letters</h2>
-        <textarea
-          className="guesses"
-          onChange={updateIncorrectLetters}
-        ></textarea>
-      </div>
+        <div className="guessesSection">
+          <h2 className="title">Incorrect Letters</h2>
+          <textarea
+            className="guesses"
+            onChange={updateIncorrectLetters}
+          ></textarea>
+        </div>
 
-      <div class="suggestionsSection">
-        <h2 className="title">Suggestions</h2>
-        <ul id="guess-list">
-          {guesses.map((guess, index) => {
-            return <li key={index}>{guess}</li>;
-          })}
-        </ul>
+        <div className="suggestionsSection">
+          <h2 className="title">Suggestions</h2>
+          <ul className="guessList">
+            {guesses.map((guess, index) => {
+              return (
+                <li className="listItem" key={index}>
+                  {guess}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
