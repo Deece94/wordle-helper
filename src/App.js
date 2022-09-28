@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import dictionary from "./dictionary";
-import "./App.css";
+import { useEffect, useState } from 'react';
+import dictionary from './dictionary';
+import './App.css';
 
 function App() {
-  const [knownLetters, setKnownLetters] = useState(["", "", "", "", ""]);
+  const [knownLetters, setKnownLetters] = useState(['', '', '', '', '']);
   const [guessedLetters, setGuessedLetters] = useState([]);
   const [incorrectLetters, setIncorrectLetters] = useState([]);
   const [guesses, setGuesses] = useState([]);
@@ -32,13 +32,13 @@ function App() {
 
   const updateGuessedLetters = (e) => {
     const input = e.target;
-    const newGuessedLetters = input.value.split("");
+    const newGuessedLetters = input.value.split('');
     setGuessedLetters(newGuessedLetters);
   };
 
   const updateIncorrectLetters = (e) => {
     const input = e.target;
-    const newIncorrectLetters = input.value.split("");
+    const newIncorrectLetters = input.value.split('');
     setIncorrectLetters(newIncorrectLetters);
   };
 
@@ -50,7 +50,7 @@ function App() {
     shuffledDictionary.every((word) => {
       // Check known letters
       for (let i = 0; i < 5; i++) {
-        if (word.charAt(i) !== knownLetters[i] && knownLetters[i] !== "") {
+        if (word.charAt(i) !== knownLetters[i] && knownLetters[i] !== '') {
           return true; // Continue
         }
       }
@@ -91,7 +91,7 @@ function App() {
     setGuesses(newGuesses);
   }, [knownLetters, guessedLetters, incorrectLetters]);
 
-  const shuffle = (array) => {
+  const sortArray = (array) => {
     let currentIndex = array.length,
       randomIndex;
 
