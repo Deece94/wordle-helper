@@ -19,7 +19,7 @@ function App() {
       input.value = value;
     }
 
-    newKnownLetters[pos] = value;
+    newKnownLetters[pos] = value.toLowerCase();
     setKnownLetters(newKnownLetters);
 
     // Send cursor to next input
@@ -32,13 +32,13 @@ function App() {
 
   const updateGuessedLetters = (e) => {
     const input = e.target;
-    const newGuessedLetters = input.value.split('');
+    const newGuessedLetters = input.value.toLowerCase().split('');
     setGuessedLetters(newGuessedLetters);
   };
 
   const updateIncorrectLetters = (e) => {
     const input = e.target;
-    const newIncorrectLetters = input.value.split('');
+    const newIncorrectLetters = input.value.toLowerCase().split('');
     setIncorrectLetters(newIncorrectLetters);
   };
 
@@ -47,10 +47,15 @@ function App() {
 
     const shuffledDictionary = sortArray(dictionary);
 
-    shuffledDictionary.every((word) => {
-      // Check known letters
+    shuffledDictionary.every((guessWord) => {
+      const lowerCaseWord = guessWord.toLowerCase();
+
+      // Check known letters are in the correct spot in the word
       for (let i = 0; i < 5; i++) {
-        if (word.charAt(i) !== knownLetters[i] && knownLetters[i] !== '') {
+        if (
+          lowerCaseWord.charAt(i) !== knownLetters[i] &&
+          knownLetters[i] !== ''
+        ) {
           return true; // Continue
         }
       }
@@ -58,7 +63,7 @@ function App() {
       // Check all semi correct letters are in the word
       let containsGuessedLetters = true;
       guessedLetters.every((letter) => {
-        if (!word.includes(letter)) {
+        if (!lowerCaseWord.includes(letter)) {
           containsGuessedLetters = false;
           return false; // Break
         }
@@ -71,7 +76,7 @@ function App() {
       // Check all incorrect letters are in the word
       let containsIncorrectLetters = false;
       incorrectLetters.every((letter) => {
-        if (word.includes(letter)) {
+        if (lowerCaseWord.includes(letter)) {
           containsIncorrectLetters = true;
           return false; // Break
         }
@@ -81,7 +86,7 @@ function App() {
         return true; // Continue
       }
 
-      newGuesses.push(word);
+      newGuesses.push(lowerCaseWord);
       if (newGuesses.length > 4) {
         return false; // Break
       }
