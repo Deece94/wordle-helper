@@ -95,9 +95,9 @@ function App() {
       }
 
       newGuesses.push(lowerCaseWord);
-      if (newGuesses.length > 4) {
-        return false; // Break
-      }
+      // if (newGuesses.length > 4) {
+      //   return false; // Break
+      // }
       return true; // Continue
     });
 
@@ -123,6 +123,8 @@ function App() {
 
     return array;
   };
+
+  const nf = new Intl.NumberFormat();
 
   return (
     <>
@@ -155,13 +157,18 @@ function App() {
         <div className="suggestionsSection">
           <h2 className="title">Suggestions</h2>
           <ul className="guessList">
-            {guesses.map((guess, index) => {
+            {guesses.slice(0, 5).map((guess, index) => {
               return (
                 <li className="listItem" key={index}>
                   {guess}
                 </li>
               );
             })}
+            {guesses.length > 5 && (
+              <li className="listItem">
+                + {nf.format(guesses.length - 5)} more
+              </li>
+            )}
           </ul>
         </div>
       </div>
