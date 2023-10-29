@@ -13,6 +13,7 @@ function App() {
   const [guessedLetters, setGuessedLetters] = useState<string[]>([]);
   const [incorrectLetters, setIncorrectLetters] = useState<string[]>([]);
   const [guesses, setGuesses] = useState<string[]>([]);
+  const [shownGuesses, setShownGuesses] = useState<number>(5);
 
   const updateKnown = (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
@@ -95,13 +96,11 @@ function App() {
       }
 
       newGuesses.push(lowerCaseWord);
-      // if (newGuesses.length > 4) {
-      //   return false; // Break
-      // }
       return true; // Continue
     });
 
     setGuesses(newGuesses);
+    setShownGuesses(5);
   }, [knownLetters, guessedLetters, incorrectLetters]);
 
   const sortArray = (array: string[]) => {
@@ -157,17 +156,28 @@ function App() {
         <div className="suggestionsSection">
           <h2 className="title">Suggestions</h2>
           <ul className="guessList">
-            {guesses.slice(0, 5).map((guess, index) => {
+            {guesses.slice(0, shownGuesses).map((guess, index) => {
               return (
                 <li className="listItem" key={index}>
                   {guess}
                 </li>
               );
             })}
-            {guesses.length > 5 && (
-              <li className="listItem">
-                + {nf.format(guesses.length - 5)} more
-              </li>
+            {guesses.length > shownGuesses && (
+              <>
+                <li className="listItem">
+                  + {nf.format(guesses.length - shownGuesses)} more
+                </li>
+                <li className="listItem">
+                  <button
+                    onClick={() => {
+                      setShownGuesses(shownGuesses + 5);
+                    }}
+                  >
+                    Show more
+                  </button>
+                </li>
+              </>
             )}
           </ul>
         </div>
