@@ -3,7 +3,7 @@ import dictionary from './dictionary';
 import './App.css';
 
 function App() {
-  const [knownLetters, setKnownLetters] = useState<string[]>([
+  const [correctLetters, setCorrectLetters] = useState<string[]>([
     '',
     '',
     '',
@@ -13,14 +13,14 @@ function App() {
   const initialArray: string[][] = Array(5)
     .fill([])
     .map(() => []);
-  const [guessedLetters, setGuessedLetters] =
+  const [semiCorrectLetters, setSemiCorrectLetters] =
     useState<string[][]>(initialArray); // a 2d array of guessed letters
   const [incorrectLetters, setIncorrectLetters] = useState<string[]>([]);
   const [shownGuesses, setShownGuesses] = useState<number>(5);
 
-  const updateKnown = (e: ChangeEvent) => {
+  const updateCorrect = (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
-    const newKnownLetters = [...knownLetters];
+    const newCorrectLetters = [...correctLetters];
     let value = input.value;
     const pos = Number(input.dataset.pos);
 
@@ -29,8 +29,8 @@ function App() {
       input.value = value;
     }
 
-    newKnownLetters[pos] = value.toLowerCase();
-    setKnownLetters(newKnownLetters);
+    newCorrectLetters[pos] = value.toLowerCase();
+    setCorrectLetters(newCorrectLetters);
 
     // Send cursor to next input
     if (pos < 4 && value.length === 1) {
@@ -43,14 +43,14 @@ function App() {
   };
 
   // Updates the guessed letters array for a specific letter position
-  const updateGuessedLetters = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const updateSemiCorrect = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const input = e.target as HTMLTextAreaElement;
-    const newGuessedLetters = input.value.toLowerCase().split('');
-    const newGuessedLettersArray = [...guessedLetters];
+    const newSemiCorrectLetters = input.value.toLowerCase().split('');
+    const newSemiCorrectLettersArray = [...semiCorrectLetters];
     const pos = Number(input.dataset.pos);
 
-    newGuessedLettersArray[pos] = newGuessedLetters;
-    setGuessedLetters(newGuessedLettersArray);
+    newSemiCorrectLettersArray[pos] = newSemiCorrectLetters;
+    setSemiCorrectLetters(newSemiCorrectLettersArray);
   };
 
   // Updates the incorrect letters array
@@ -92,34 +92,36 @@ function App() {
       // Check known letters are in the correct spot in the word
       for (let i = 0; i < 5; i++) {
         if (
-          lowerCaseWord.charAt(i) !== knownLetters[i] &&
-          knownLetters[i] !== ''
+          lowerCaseWord.charAt(i) !== correctLetters[i] &&
+          correctLetters[i] !== ''
         ) {
           return; // Continue to next word
         }
       }
 
       // Check semi correct letters array to see if they are in the word but not at this position
-      const fulfillsGuessedLetters = guessedLetters.every((letters, index) => {
-        // If no letters have been guessed for this position, continue
-        if (letters.length === 0) {
-          return true;
-        }
-
-        // Check each guessed letter to see if it is in the word in another position but not this one
-        const fulfillsGuessedLetter = letters.every((letter) => {
-          if (
-            lowerCaseWord.includes(letter) &&
-            lowerCaseWord.charAt(index) !== letter
-          ) {
+      const fulfillsSemiCorrectLetters = semiCorrectLetters.every(
+        (letters, index) => {
+          // If no letters have been guessed for this position, continue
+          if (letters.length === 0) {
             return true;
           }
-          return false;
-        });
 
-        return fulfillsGuessedLetter;
-      });
-      if (!fulfillsGuessedLetters) {
+          // Check each semi correct letter to see if it is in the word in another position but not this one
+          const fulfillsSemiCorrectLetter = letters.every((letter) => {
+            if (
+              lowerCaseWord.includes(letter) &&
+              lowerCaseWord.charAt(index) !== letter
+            ) {
+              return true;
+            }
+            return false;
+          });
+
+          return fulfillsSemiCorrectLetter;
+        }
+      );
+      if (!fulfillsSemiCorrectLetters) {
         return;
       }
 
@@ -140,7 +142,7 @@ function App() {
     setShownGuesses(5);
 
     return newGuesses;
-  }, [knownLetters, guessedLetters, incorrectLetters]);
+  }, [correctLetters, semiCorrectLetters, incorrectLetters]);
 
   const nf = new Intl.NumberFormat();
 
@@ -149,38 +151,38 @@ function App() {
       <h1 className="header-title">Wordle Helper</h1>
       <div className="container">
         <div className="known-section">
-          <input className="letter" data-pos={0} onChange={updateKnown} />
-          <input className="letter" data-pos={1} onChange={updateKnown} />
-          <input className="letter" data-pos={2} onChange={updateKnown} />
-          <input className="letter" data-pos={3} onChange={updateKnown} />
-          <input className="letter" data-pos={4} onChange={updateKnown} />
+          <input className="letter" data-pos={0} onChange={updateCorrect} />
+          <input className="letter" data-pos={1} onChange={updateCorrect} />
+          <input className="letter" data-pos={2} onChange={updateCorrect} />
+          <input className="letter" data-pos={3} onChange={updateCorrect} />
+          <input className="letter" data-pos={4} onChange={updateCorrect} />
         </div>
 
         <h2 className="title">Semi correct Letters</h2>
         <div className="guesses-section">
           <textarea
             className="guessed-letter"
-            onChange={updateGuessedLetters}
+            onChange={updateSemiCorrect}
             data-pos={0}
           ></textarea>
           <textarea
             className="guessed-letter"
-            onChange={updateGuessedLetters}
+            onChange={updateSemiCorrect}
             data-pos={1}
           ></textarea>
           <textarea
             className="guessed-letter"
-            onChange={updateGuessedLetters}
+            onChange={updateSemiCorrect}
             data-pos={2}
           ></textarea>
           <textarea
             className="guessed-letter"
-            onChange={updateGuessedLetters}
+            onChange={updateSemiCorrect}
             data-pos={3}
           ></textarea>
           <textarea
             className="guessed-letter"
-            onChange={updateGuessedLetters}
+            onChange={updateSemiCorrect}
             data-pos={4}
           ></textarea>
         </div>
