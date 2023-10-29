@@ -1,18 +1,24 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, ChangeEventHandler, useEffect, useState } from 'react';
 import dictionary from './dictionary';
 import './App.css';
 
 function App() {
-  const [knownLetters, setKnownLetters] = useState(['', '', '', '', '']);
-  const [guessedLetters, setGuessedLetters] = useState([]);
-  const [incorrectLetters, setIncorrectLetters] = useState([]);
-  const [guesses, setGuesses] = useState([]);
+  const [knownLetters, setKnownLetters] = useState<string[]>([
+    '',
+    '',
+    '',
+    '',
+    '',
+  ]);
+  const [guessedLetters, setGuessedLetters] = useState<string[]>([]);
+  const [incorrectLetters, setIncorrectLetters] = useState<string[]>([]);
+  const [guesses, setGuesses] = useState<string[]>([]);
 
-  const updateKnown = (e) => {
-    const input = e.target;
+  const updateKnown = (e: ChangeEvent) => {
+    const input = e.target as HTMLInputElement;
     const newKnownLetters = [...knownLetters];
     let value = input.value;
-    const pos = input.dataset.pos;
+    const pos = Number(input.dataset.pos);
 
     if (value.length > 1) {
       value = value.slice(0, 1);
@@ -24,28 +30,30 @@ function App() {
 
     // Send cursor to next input
     if (pos < 4 && value.length === 1) {
-      const nextPos = parseInt(pos) + 1;
-      const nextInput = document.querySelector(`input[data-pos='${nextPos}']`);
+      const nextPos = pos + 1;
+      const nextInput = document.querySelector(
+        `input[data-pos='${nextPos}']`
+      ) as HTMLInputElement;
       nextInput.select();
     }
   };
 
-  const updateGuessedLetters = (e) => {
-    const input = e.target;
+  const updateGuessedLetters = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const input = e.target as HTMLTextAreaElement;
     const newGuessedLetters = input.value.toLowerCase().split('');
     setGuessedLetters(newGuessedLetters);
   };
 
-  const updateIncorrectLetters = (e) => {
-    const input = e.target;
+  const updateIncorrectLetters = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const input = e.target as HTMLTextAreaElement;
     const newIncorrectLetters = input.value.toLowerCase().split('');
     setIncorrectLetters(newIncorrectLetters);
   };
 
   useEffect(() => {
-    const newGuesses = [];
+    const newGuesses: string[] = [];
 
-    const shuffledDictionary = sortArray(dictionary);
+    const shuffledDictionary: string[] = sortArray(dictionary);
 
     shuffledDictionary.every((guessWord) => {
       const lowerCaseWord = guessWord.toLowerCase();
@@ -96,7 +104,7 @@ function App() {
     setGuesses(newGuesses);
   }, [knownLetters, guessedLetters, incorrectLetters]);
 
-  const sortArray = (array) => {
+  const sortArray = (array: string[]) => {
     let currentIndex = array.length,
       randomIndex;
 

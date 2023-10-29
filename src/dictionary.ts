@@ -1,4 +1,4 @@
-const dictionary = [
+const dictionary: string[] = [
   'aahed',
   'aalii',
   'aargh',
