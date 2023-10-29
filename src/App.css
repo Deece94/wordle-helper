@@ -14,35 +14,43 @@ body {
   border-radius: 12px;
 }
 
-.headerTitle {
+.header-title {
   font-size: 2.6em;
   text-align: center;
 }
 
-.knownLetters {
+.known-section,
+.guesses-section,
+.suggestions-section,
+.incorrect-section {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
-.letter {
+.letter,
+.guessed-letter {
   margin: 0 2px;
   height: 50px;
   width: 50px;
-  font-size: 2em;
   text-align: center;
 }
 
-.guessesSection,
-.suggestionsSection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.letter {
+  font-size: 2em;
+}
+
+.guessed-letter {
+  font-size: 1.2em;
+
+  resize: none;
 }
 
 .title {
   padding-top: 22px;
   display: block;
   font-size: 2em;
+  text-align: center;
 }
 
 .guesses {
@@ -52,7 +60,7 @@ body {
   height: 20px;
 }
 
-.guessList {
+.guess-list {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -60,7 +68,7 @@ body {
   margin-block: 0;
 }
 
-.listItem {
+.guess-list-item {
   display: inline-block;
   list-style: none;
   text-align: left;
